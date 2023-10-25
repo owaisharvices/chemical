@@ -14,4 +14,6 @@ public interface ChemicalConcentrationDTLRepository extends JpaRepository<Chemic
 
 
     List<ChemicalConcentrationDTL> findByChemicalMSTIdAndConcentration(Long chemicalMSTId,Double concentration);
+
+    List<ChemicalConcentrationDTL> findByChemicalMSTId(Long id);
 }

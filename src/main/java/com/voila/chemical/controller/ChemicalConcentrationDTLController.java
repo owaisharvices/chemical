@@ -71,5 +71,22 @@ public class ChemicalConcentrationDTLController {
         }
     }
 
+    @GetMapping(value = "concentrationByChemicalMSTId/" + "{chemicalMSTId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public GenericResponse concentrationByChemicalMSTId(@PathVariable(value = "chemicalMSTId") Long chemicalMSTId) {
+        GenericResponse genericResponse = new GenericResponse();
+        try {
+            genericResponse.setData(service.getAllChemicalConcentrationByChemicalMSTId(chemicalMSTId));
+            genericResponse.setMessage("SuccessFul");
+            genericResponse.setStatus(true);
+            return genericResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            genericResponse.setData(null);
+            genericResponse.setMessage(e.getMessage());
+            genericResponse.setStatus(false);
+            return genericResponse;
+        }
+    }
+
 
 }

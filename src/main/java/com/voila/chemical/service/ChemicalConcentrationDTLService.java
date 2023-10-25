@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ChemicalConcentrationDTLService {
@@ -38,9 +41,16 @@ public class ChemicalConcentrationDTLService {
         return repository.save(chemicalConcentrationDTL);
     }
 
-    public List<ChemicalConcentrationDTL> findByChemicalMSTIdAndConcentration(Long chemicalMSTId,Double concentration)
+    public Map findByChemicalMSTIdAndConcentration(Long chemicalMSTId,Double concentration)
     {
-        return repository.findByChemicalMSTIdAndConcentration(chemicalMSTId,concentration);
+       Map<String,List<ChemicalConcentrationDTL>> map= repository.findByChemicalMSTIdAndConcentration(chemicalMSTId,concentration).stream().collect(Collectors.groupingBy(ChemicalConcentrationDTL::getHeader));
+    return map;
+    }
+
+
+    public Set<Double> getAllChemicalConcentrationByChemicalMSTId(Long chemicalMSTId)
+    {
+       return repository.findByChemicalMSTId(chemicalMSTId).stream().map(ChemicalConcentrationDTL::getConcentration).collect(Collectors.toSet());
     }
 
 
